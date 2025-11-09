@@ -9,6 +9,7 @@ import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 
+import java.util.Dictionary;
 import java.util.Optional;
 
 /**
@@ -33,6 +34,8 @@ public class Function {
         // Parse query parameter
         final String query = request.getQueryParameters().get("name");
         final String name = request.getBody().orElse(query);
+        Dictionary<String, String> metadata = new java.util.Hashtable<>();
+        metadata.put("exampleKey", "exampleValue");
 
         if (name == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass a name on the query string or in the request body").build();
